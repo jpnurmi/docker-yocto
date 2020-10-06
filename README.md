@@ -14,7 +14,7 @@ build any project anywhere in your home tree.
 
 ## Setup
 
-    $ echo "alias docker-x='docker run --rm -ti -h docker-x -v $HOME:$HOME docker-x'" >> ~/.bashrc
+    $ echo "alias docker-x='docker run --rm -ti -h docker-x -w $PWD -v $HOME:$HOME docker-x'" >> ~/.bashrc
 
 ## Run
 
