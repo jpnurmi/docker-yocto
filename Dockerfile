@@ -17,6 +17,7 @@ RUN mkdir git-lfs
 RUN wget https://github.com/git-lfs/git-lfs/releases/download/v2.12.0/git-lfs-linux-amd64-v2.12.0.tar.gz
 RUN tar zxvf git-lfs-linux-amd64-v2.12.0.tar.gz
 RUN cp git-lfs $(git --exec-path)
+RUN ln -s $(git --exec-path)/git-lfs /usr/local/bin/git-lfs
 
 ADD https://commondatastorage.googleapis.com/git-repo-downloads/repo /usr/local/bin/
 RUN chmod 755 /usr/local/bin/*
