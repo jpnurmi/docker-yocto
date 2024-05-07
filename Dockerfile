@@ -1,4 +1,4 @@
-ARG BASE=ubuntu:18.04
+ARG BASE=ubuntu:22.04
 
 FROM ${BASE}
 
@@ -6,34 +6,117 @@ ARG GID=1000
 ARG UID=1000
 ARG USER=user
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y gawk wget git-core diffstat unzip texinfo gcc-multilib \
-    build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
-    xz-utils debianutils iputils-ping libsdl1.2-dev xterm \
-    locales nano sudo tree curl
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    bc \
+    binutils \
+    bison \
+    build-essential \
+    ca-certificates \
+    ccache \
+    chrpath \
+    clang \
+    clang-format \
+    clang-tools \
+    clangd \
+    cmake \
+    coreutils \
+    cpio \
+    curl \
+    debianutils \
+    diffstat \
+    diffutils \
+    default-jdk \
+    dos2unix \
+    findutils \
+    flex \
+    gawk \
+    gcc-arm-none-eabi \
+    gcc-multilib \
+    g++-multilib \
+    genext2fs \
+    git \
+    git-lfs \
+    gnupg \
+    gnutls-bin \
+    gperf \
+    gzip \
+    hostname \
+    imagemagick \
+    iputils-ping \
+    jq \
+    lcov \
+    libarchive-zip-perl \
+    libblkid-dev \
+    libc6-dev-i386 \
+    libclang-dev \
+    libelf-dev \
+    liblzma-dev \
+    libsdl1.2-dev \
+    libssl-dev \
+    libtinfo5 \
+    locales \
+    lz4 \
+    m4 \
+    make \
+    meson \
+    mmv \
+    moreutils \
+    mtools \
+    mtd-utils \
+    nano \
+    net-tools \
+    ninja-build \
+    openssl \
+    pkg-config \
+    python3 \
+    python3-argcomplete \
+    python3-pexpect \
+    python3-pip \
+    python3-requests \
+    python3-rich \
+    python3-setuptools \
+    python-is-python3 \
+    rar \
+    ruby \
+    scons \
+    screen \
+    socat \
+    strace \
+    stress \
+    sudo \
+    texinfo \
+    tmux \
+    tree \
+    u-boot-tools \
+    unrar \
+    unzip \
+    valgrind \
+    wget \
+    xsltproc \
+    xterm \
+    xz-utils \
+    zip
 
-RUN mkdir git-lfs
-RUN wget https://github.com/git-lfs/git-lfs/releases/download/v2.12.0/git-lfs-linux-amd64-v2.12.0.tar.gz
-RUN tar zxvf git-lfs-linux-amd64-v2.12.0.tar.gz
-RUN cp git-lfs $(git --exec-path)
-RUN ln -s $(git --exec-path)/git-lfs /usr/local/bin/git-lfs
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD https://commondatastorage.googleapis.com/git-repo-downloads/repo /usr/local/bin/
 RUN chmod 755 /usr/local/bin/*
 
-RUN apt-get update
-RUN apt-get install apt-transport-https
-RUN wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/dart.gpg
-RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian stable main' | sudo tee /etc/apt/sources.list.d/dart_stable.list
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y dart libclang-10-dev
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+RUN apt-get update && sudo apt-get install nodejs -y
+RUN npm install -g jake
+RUN npm install -g pegjs
 
-RUN mkdir -p /home/${USER} && \
-    echo "${USER}:x:${UID}:${GID}:${USER},,,:/home/${USER}:/bin/bash" >> /etc/passwd && \
-    echo "${USER}:x:${UID}:" >> /etc/group && \
-    echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} && \
+RUN ln -sf bash /bin/sh
+
+RUN groupadd --gid ${GID} ${USER} && \
+    useradd --no-create-home --shell /bin/bash --uid ${UID} --gid ${GID} ${USER} && \
+    usermod -aG sudo ${USER} && \
+    echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/${USER} && \
     chmod 0440 /etc/sudoers.d/${USER} && \
+    mkdir -p /home/${USER} && \
     chown ${UID}:${GID} -R /home/${USER}
 
 RUN locale-gen en_US.UTF-8
