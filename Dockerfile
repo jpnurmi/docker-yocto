@@ -8,6 +8,8 @@ ARG USER=user
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-file \
+    bash-completion \
     bc \
     binutils \
     bison \
@@ -51,10 +53,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libc6-dev-i386 \
     libclang-dev \
     libelf-dev \
+    libgl1-mesa-dev \
+    libgtk-3-dev \
     liblzma-dev \
     libsdl1.2-dev \
     libssl-dev \
     libtinfo5 \
+    libxcursor-dev \
+    libxinerama-dev \
+    libxrandr-dev \
     locales \
     lz4 \
     m4 \
@@ -98,6 +105,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     xz-utils \
     zip
 
+RUN apt-file update
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD https://commondatastorage.googleapis.com/git-repo-downloads/repo /usr/local/bin/

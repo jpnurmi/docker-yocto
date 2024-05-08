@@ -1,8 +1,9 @@
 # Docker X
 
-A simple and generic Docker image primarily meant for building Yocto
-images. Follow the instructions below to conveniently bind mount your
-home directory into a Docker X container.
+A simple and generic Docker image primarily meant for building larger
+projects with complex build systems that require an older and stable
+host environment. Follow the instructions below to conveniently bind
+mount your home directory into a Docker X container.
 
 Notice that Docker X by itself does not build anything. It's purely
 meant for conveniently switching to an environment that can be used to
