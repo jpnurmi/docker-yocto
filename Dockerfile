@@ -32,6 +32,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     dos2unix \
     findutils \
     flex \
+    fzf \
     gawk \
     gcc-arm-none-eabi \
     gcc-multilib \
