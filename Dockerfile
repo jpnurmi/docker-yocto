@@ -30,6 +30,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     diffutils \
     default-jdk \
     dos2unix \
+    file \
     findutils \
     flex \
     fzf \
@@ -104,7 +105,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     xsltproc \
     xterm \
     xz-utils \
-    zip
+    zip \
+    zstd
 
 RUN apt-file update
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
