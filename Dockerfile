@@ -8,6 +8,7 @@ ARG USER=user
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    abootimg \
     apt-file \
     bash-completion \
     bc \
@@ -30,6 +31,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     diffutils \
     default-jdk \
     dos2unix \
+    dosfstools \
     file \
     findutils \
     flex \
@@ -50,6 +52,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     iputils-ping \
     jq \
     lcov \
+    lib32ncurses5-dev \
+    lib32z1-dev \
     libarchive-zip-perl \
     libblkid-dev \
     libc6-dev-i386 \
@@ -61,8 +65,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libsdl1.2-dev \
     libssl-dev \
     libtinfo5 \
+    libx11-dev \
     libxcursor-dev \
     libxinerama-dev \
+    libxml2-utils \
     libxrandr-dev \
     locales \
     lz4 \
@@ -102,10 +108,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     unzip \
     valgrind \
     wget \
+    x11proto-core-dev \
     xsltproc \
     xterm \
     xz-utils \
     zip \
+    zlib1g-dev \
     zstd
 
 RUN apt-file update
